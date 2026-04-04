@@ -22,3 +22,6 @@ coverage/
 __pycache__/
 *.pyc
 .venv/
+
+# Local notes
+对话记录.txt
