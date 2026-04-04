@@ -53,6 +53,23 @@ h1 {
   max-width: 68ch;
 }
 
+.chips {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-block;
+  border: 1px solid var(--border);
+  background: #101522;
+  color: #c7d7eb;
+  font-size: 0.82rem;
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+
 .card {
   background: var(--card);
   border: 1px solid var(--border);
