@@ -1,6 +1,5 @@
 # ADR: Delay Embedding/Reranker Until Query Set Stabilizes
 
-- Date: 2026-05-03
 - Status: Accepted
 - Owners: Conversational Game Systems
 
