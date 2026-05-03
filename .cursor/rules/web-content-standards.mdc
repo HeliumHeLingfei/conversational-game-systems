@@ -1,0 +1,13 @@
+---
+description: Standards for landing pages and product-facing content
+globs: pages/**/*.html, pages/**/*.css, templates/**/*.html, README.md
+alwaysApply: false
+---
+
+# Web Content Standards
+
+- Prefer product-first language over personal branding on public pages.
+- Keep copy concise and concrete; avoid unverified claims.
+- Maintain working relative paths for static assets and links.
+- Preserve reusable placeholders in invoice/proposal templates.
+- Keep HTML/CSS static-first unless dynamic behavior is explicitly requested.

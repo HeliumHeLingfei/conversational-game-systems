@@ -1,0 +1,12 @@
+---
+description: Hard constraints for repository safety and completion criteria
+alwaysApply: true
+---
+
+# Agent Hard Constraints
+
+- Never commit local private notes or transcript files.
+- Keep changes scoped to the user request; avoid unrelated refactors.
+- Before completion, verify changed files and summarize follow-up actions.
+- Do not claim completion without checking impacted files for consistency.
+- For multi-file work, prefer incremental commits with clear intent.
