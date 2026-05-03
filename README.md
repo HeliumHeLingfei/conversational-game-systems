@@ -24,9 +24,10 @@ I am building and commercializing software systems that combine:
 
 ## Repository Structure
 
-- `docs/`: public landing page for GitHub Pages
-- `documents/`: printable one-page product/services brief
+- `pages/`: public landing page and printable product brief pages
 - `templates/`: reusable invoice and proposal templates
+- `.cursor/rules/`: project rules for Cursor agent behavior
+- `.agents/skills/`: project-scoped reusable agent workflows
 
 ## Contact
 
@@ -51,7 +52,7 @@ After pushing this repository:
 
 1. Open repository `Settings`
 2. Go to `Pages`
-3. Set source to branch `main` and folder `/docs`
+3. Set source to branch `main` and folder `/pages`
 4. Save and wait for deployment
 
 ## License
