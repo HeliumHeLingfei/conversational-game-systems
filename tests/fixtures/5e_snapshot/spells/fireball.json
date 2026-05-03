@@ -1,0 +1,8 @@
+{
+  "index": "fireball",
+  "name": "Fireball",
+  "level": 3,
+  "range": "150 feet",
+  "components": ["V", "S", "M"],
+  "desc": ["A bright streak flashes from your pointing finger."]
+}

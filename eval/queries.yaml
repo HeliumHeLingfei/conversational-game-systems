@@ -1,0 +1,26 @@
+[
+  {
+    "id": "q_spell_fireball",
+    "query": "spell fireball range and damage",
+    "expected_mode": "entity_first",
+    "expected_contains": "fireball"
+  },
+  {
+    "id": "q_monster_goblin",
+    "query": "monster goblin armor class",
+    "expected_mode": "entity_first",
+    "expected_contains": "goblin"
+  },
+  {
+    "id": "q_rules_cover",
+    "query": "how does cover work in combat",
+    "expected_mode": "rules_first",
+    "expected_contains": "cover"
+  },
+  {
+    "id": "q_rules_condition",
+    "query": "when can i take an action in combat",
+    "expected_mode": "rules_first",
+    "expected_contains": "action"
+  }
+]

@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "id": "cgs.pack.emberfall_intro",
+    "version": "1.0.0",
+    "language": "en-US",
+    "author": "Conversational Game Systems",
+    "compatibility": {
+      "minRuntimeVersion": "0.1.0"
+    }
+  },
+  "world": {
+    "setting": {
+      "title": "Emberfall Outpost",
+      "tone": "grim-hopeful",
+      "summary": "A frontier outpost under pressure from raiders."
+    },
+    "factions": [
+      { "id": "f_outpost", "name": "Outpost Watch", "stance": "ally" },
+      { "id": "f_ashclaw", "name": "Ashclaw Raiders", "stance": "hostile" }
+    ],
+    "locations": [
+      {
+        "id": "loc_gate",
+        "name": "North Gate",
+        "description": "Main gate and defensive rampart."
+      }
+    ],
+    "scenes": [
+      {
+        "id": "scene_gate_square",
+        "name": "Gate Square",
+        "description": "Tactical encounter space outside the north gate."
+      }
+    ]
+  },
+  "actors": {
+    "playerArchetypes": [
+      {
+        "id": "a_vanguard",
+        "label": "Vanguard",
+        "starterStats": { "hp": 24, "atk": 6, "def": 4 },
+        "starterInventory": ["it_bandage"]
+      }
+    ],
+    "npcs": [
+      {
+        "id": "npc_marla",
+        "name": "Captain Marla",
+        "role": "quest_giver",
+        "dialogueStyle": "direct"
+      }
+    ],
+    "enemyTemplates": [
+      {
+        "id": "e_raider_scout",
+        "name": "Raider Scout",
+        "baseStats": { "hp": 12, "atk": 4, "def": 2 },
+        "abilities": ["quick_strike"]
+      }
+    ]
+  },
+  "state": {
+    "questVariables": { "raidersRepelled": 0 },
+    "inventoryKeys": ["it_bandage", "it_gate_key"],
+    "flags": { "metCaptainMarla": false, "northGateSecured": false },
+    "progression": {
+      "currentChapter": "chapter_1",
+      "milestones": []
+    }
+  },
+  "events": {
+    "events": [
+      {
+        "id": "ev_meet_captain",
+        "trigger": { "type": "enter_location", "sourceId": "loc_gate" },
+        "conditions": [],
+        "outcomes": [
+          {
+            "kind": "set_flag",
+            "payload": { "key": "metCaptainMarla", "value": true }
+          },
+          {
+            "kind": "narrate",
+            "payload": { "text": "Captain Marla briefs your first defense." }
+          }
+        ]
+      },
+      {
+        "id": "ev_start_gate_skirmish",
+        "trigger": { "type": "state_threshold", "sourceId": "raidersRepelled" },
+        "conditions": [{ "key": "raidersRepelled", "operator": "eq", "value": 0 }],
+        "outcomes": [
+          {
+            "kind": "start_encounter",
+            "payload": { "encounterId": "enc_gate_skirmish" }
+          }
+        ]
+      }
+    ]
+  },
+  "encounters": {
+    "encounters": [
+      {
+        "id": "enc_gate_skirmish",
+        "entryCondition": [
+          { "key": "metCaptainMarla", "operator": "eq", "value": true }
+        ],
+        "sceneId": "scene_gate_square",
+        "turnConfig": {
+          "initiativeMode": "speed",
+          "maxRounds": 8
+        },
+        "enemyWave": ["e_raider_scout"]
+      }
+    ]
+  }
+}

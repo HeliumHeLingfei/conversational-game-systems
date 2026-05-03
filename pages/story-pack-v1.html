@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Story Pack v1 Draft | Conversational Game Systems</title>
+    <meta
+      name="description"
+      content="Draft schema for Story Pack v1 used by Conversational Game Systems runtime."
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <p class="kicker">Technical Draft</p>
+        <h1>Story Pack v1 Specification (Draft)</h1>
+        <p class="subtitle">
+          Baseline content container for playable sessions, resumable state, and
+          explicit narrative-to-encounter transitions.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Required Sections</h2>
+        <ul>
+          <li>Metadata: pack identity and runtime compatibility</li>
+          <li>World: setting, factions, and key locations</li>
+          <li>Actors: player archetypes, NPCs, and enemy templates</li>
+          <li>State: quest variables, inventory keys, flags, progression</li>
+          <li>Events: triggers, conditions, outcomes, side effects</li>
+          <li>Encounters: battle entry conditions, scene, and turn config</li>
+          <li>Validation: required fields and cross-reference constraints</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Design Goals</h2>
+        <ul>
+          <li>Every trigger is explicit and machine-verifiable</li>
+          <li>Runtime state is serializable and resumable</li>
+          <li>Narrative and combat transitions are traceable</li>
+          <li>Schema is additive-first for forward compatibility</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Minimal Valid Pack</h2>
+        <p>
+          Source document is maintained in
+          <code>documents/story-pack-v1-spec.md</code>.
+        </p>
+        <p>
+          Machine-readable schema is maintained in
+          <code>documents/story-pack-v1.schema.json</code>, and a runnable
+          sample pack is provided in
+          <code>documents/story-pack-v1.minimal.json</code>.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Validation Quick Start</h2>
+        <ul>
+          <li>Top-level keys must include metadata/world/actors/state/events/encounters</li>
+          <li>`metadata.version` should use semantic version format (x.y.z)</li>
+          <li>`events.events[].trigger.type` must use a supported enum value</li>
+          <li>`encounters.encounters[].turnConfig.maxRounds` must be at least 1</li>
+          <li>
+            After schema validation, the reference validator rejects duplicate IDs within
+            each list (events, encounters, locations, factions, scenes, archetypes, NPCs,
+            enemy templates)
+          </li>
+          <li>
+            Cross-references: <code>start_encounter</code> → encounter id,
+            <code>enemyWave</code> → enemy template id, <code>enter_location</code> →
+            location id; if <code>world.scenes</code> is non-empty, each encounter
+            <code>sceneId</code> must exist in that registry
+          </li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Common Invalid Cases</h2>
+        <ul>
+          <li>Missing `metadata.compatibility.minRuntimeVersion`</li>
+          <li>Using unsupported `operator` values in conditions</li>
+          <li>Setting `stance` outside ally/neutral/hostile</li>
+          <li>Using non-numeric stats in `starterStats` or `baseStats`</li>
+          <li>Duplicate `id` values within the same array (e.g. two events sharing one id)</li>
+          <li>
+            Encounter <code>sceneId</code> not listed under <code>world.scenes</code> when
+            that registry is present and non-empty
+          </li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <p><a href="./index.html">Back to landing page</a></p>
+      </section>
+    </main>
+  </body>
+</html>

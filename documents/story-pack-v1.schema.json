@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://conversational-game-systems.dev/schemas/story-pack-v1.schema.json",
+  "title": "Story Pack v1",
+  "description": "Draft executable story-pack schema for Conversational Game Systems.",
+  "type": "object",
+  "required": ["metadata", "world", "actors", "state", "events", "encounters"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["id", "version", "language", "author", "compatibility"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "language": { "type": "string", "minLength": 2 },
+        "author": { "type": "string", "minLength": 1 },
+        "compatibility": {
+          "type": "object",
+          "required": ["minRuntimeVersion"],
+          "properties": {
+            "minRuntimeVersion": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            },
+            "maxRuntimeVersion": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "world": {
+      "type": "object",
+      "required": ["setting", "factions", "locations"],
+      "properties": {
+        "setting": {
+          "type": "object",
+          "required": ["title", "tone", "summary"],
+          "properties": {
+            "title": { "type": "string", "minLength": 1 },
+            "tone": { "type": "string", "minLength": 1 },
+            "summary": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": true
+        },
+        "factions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "stance"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "stance": {
+                "type": "string",
+                "enum": ["ally", "neutral", "hostile"]
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "description"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": true
+          }
+        },
+        "scenes": {
+          "type": "array",
+          "description": "Optional tactical scene registry; when non-empty, encounter.sceneId must reference a scene id here.",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "description"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "description": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "actors": {
+      "type": "object",
+      "required": ["playerArchetypes", "npcs", "enemyTemplates"],
+      "properties": {
+        "playerArchetypes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "label", "starterStats", "starterInventory"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "label": { "type": "string", "minLength": 1 },
+              "starterStats": {
+                "type": "object",
+                "additionalProperties": { "type": "number" }
+              },
+              "starterInventory": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "npcs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "role", "dialogueStyle"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "role": { "type": "string", "minLength": 1 },
+              "dialogueStyle": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": true
+          }
+        },
+        "enemyTemplates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "baseStats", "abilities"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "baseStats": {
+                "type": "object",
+                "additionalProperties": { "type": "number" }
+              },
+              "abilities": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 }
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "state": {
+      "type": "object",
+      "required": ["questVariables", "inventoryKeys", "flags", "progression"],
+      "properties": {
+        "questVariables": {
+          "type": "object",
+          "additionalProperties": {
+            "type": ["string", "number", "boolean"]
+          }
+        },
+        "inventoryKeys": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "flags": {
+          "type": "object",
+          "additionalProperties": { "type": "boolean" }
+        },
+        "progression": {
+          "type": "object",
+          "required": ["currentChapter", "milestones"],
+          "properties": {
+            "currentChapter": { "type": "string", "minLength": 1 },
+            "milestones": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "events": {
+      "type": "object",
+      "required": ["events"],
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/event" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "encounters": {
+      "type": "object",
+      "required": ["encounters"],
+      "properties": {
+        "encounters": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/encounter" }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "trigger": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "enter_location",
+            "dialogue_choice",
+            "state_threshold",
+            "manual"
+          ]
+        },
+        "sourceId": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "condition": {
+      "type": "object",
+      "required": ["key", "operator", "value"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "operator": {
+          "type": "string",
+          "enum": ["eq", "neq", "gt", "gte", "lt", "lte", "in", "not_in"]
+        },
+        "value": {
+          "type": ["string", "number", "boolean", "array", "object", "null"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "outcome": {
+      "type": "object",
+      "required": ["kind", "payload"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "set_flag",
+            "set_variable",
+            "grant_item",
+            "start_encounter",
+            "narrate"
+          ]
+        },
+        "payload": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "event": {
+      "type": "object",
+      "required": ["id", "trigger", "conditions", "outcomes"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "trigger": { "$ref": "#/$defs/trigger" },
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        },
+        "outcomes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/outcome" }
+        },
+        "sideEffects": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "turnConfig": {
+      "type": "object",
+      "required": ["initiativeMode", "maxRounds"],
+      "properties": {
+        "initiativeMode": {
+          "type": "string",
+          "enum": ["speed", "round_robin", "scripted"]
+        },
+        "maxRounds": { "type": "number", "minimum": 1 }
+      },
+      "additionalProperties": true
+    },
+    "encounter": {
+      "type": "object",
+      "required": ["id", "entryCondition", "sceneId", "turnConfig", "enemyWave"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "entryCondition": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        },
+        "sceneId": { "type": "string", "minLength": 1 },
+        "turnConfig": { "$ref": "#/$defs/turnConfig" },
+        "enemyWave": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

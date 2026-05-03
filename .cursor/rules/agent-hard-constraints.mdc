@@ -10,3 +10,4 @@ alwaysApply: true
 - Before completion, verify changed files and summarize follow-up actions.
 - Do not claim completion without checking impacted files for consistency.
 - For multi-file work, prefer incremental commits with clear intent.
+- Do not commit local `vendor/` upstream snapshots or generated `build/` artifacts unless explicitly requested.

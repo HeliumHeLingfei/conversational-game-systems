@@ -1,0 +1,2 @@
+# Story-pack validation and runtime (see scripts/validate-story-pack.py, runtime/story_pack.py)
+jsonschema>=4.20,<5

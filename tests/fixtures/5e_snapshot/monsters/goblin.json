@@ -1,0 +1,8 @@
+{
+  "index": "goblin",
+  "name": "Goblin",
+  "size": "Small",
+  "type": "humanoid",
+  "armor_class": 15,
+  "hit_points": 7
+}
